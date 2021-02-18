@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 
 import static com.example.boraracharpdm.R.id.result;
+import static com.example.boraracharpdm.R.string.tts2;
 
 public class MainActivity extends AppCompatActivity implements TextWatcher, View.OnClickListener, TextToSpeech.OnInitListener {
 
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher, View
          result.setText("R$  "+df.format(pagar));
 
          } catch (NumberFormatException e) {
-         result.setText("R$ 0.00");
+         result.setText(R.string.restemp);
      }
 
     }
@@ -90,13 +91,13 @@ protected double divide(double valor1, int qt){
         if(view == shareB) {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_TEXT, "Valor à Pagar: " + result.getText().toString() + " Por Pessoa.");
+            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.msg1) + result.getText().toString() + getString(R.string.msg2));
             startActivity(intent);
         }
 
         if(view == ttsB){
             if(falar != null){
-                falar.speak("O valor à pagar é: "+result.getText().toString(),TextToSpeech.QUEUE_FLUSH,null,"ID1");
+                falar.speak(getString(R.string.fala)+result.getText().toString(),TextToSpeech.QUEUE_FLUSH,null,"ID1");
 
             }
         }
@@ -123,9 +124,9 @@ protected double divide(double valor1, int qt){
     @Override
     public void onInit(int iniStatus) {
         if(iniStatus == TextToSpeech.SUCCESS){
-            Toast.makeText(this, "TTS ativado...", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.tts1, Toast.LENGTH_LONG).show();
         }else if (iniStatus == TextToSpeech.ERROR){
-            Toast.makeText(this,"Sem TTS habilitado...",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, tts2,Toast.LENGTH_LONG).show();
         }
     }
 }
